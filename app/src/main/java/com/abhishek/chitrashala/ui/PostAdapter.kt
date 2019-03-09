@@ -37,9 +37,16 @@ class PostAdapter(private val context: Context, val postClickCallbacks: PostClic
         notifyItemRangeInserted(this.posts.size, posts.size)
     }
 
-    inner class PostVH(view: View) : RecyclerView.ViewHolder(view), View.OnLongClickListener {
+    inner class PostVH(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener, View.OnLongClickListener {
         init {
+            view.setOnClickListener(this)
             view.setOnLongClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val postUIModel = v?.getTag(R.id.tag_url) as PostUIModel? ?: return
+            postClickCallbacks.onPostClick(postUIModel)
         }
 
         override fun onLongClick(v: View?): Boolean {

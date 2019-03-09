@@ -10,6 +10,9 @@ import com.abhishek.chitrashala.base.BaseActivity
 import com.abhishek.chitrashala.data.PostsViewModel
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.utils.Converters
+import com.abhishek.chitrashala.utils.close
+import com.abhishek.chitrashala.utils.isOpen
+import com.abhishek.chitrashala.utils.open
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -46,16 +49,24 @@ class PostActivity : BaseActivity(), PostClickCallbacks {
         super.onDestroy()
     }
 
+    override fun onPostClick(postUIModel: PostUIModel) {
+        bottomSheetBehavior.close()
+    }
+
     override fun onPostLongClick(postUIModel: PostUIModel) {
-        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        } else {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
+        toggleBottomSheetState()
     }
 
     private fun setUpBottomSheet() {
-//        bottomSheetBehavior = BottomSheetBehavior.from(ll_bottom_sheet)
-//        bottomSheetBehavior.peekHeight = 0
+        bottomSheetBehavior = BottomSheetBehavior.from(ll_bottom_sheet)
+        bottomSheetBehavior.peekHeight = 0
+    }
+
+    private fun toggleBottomSheetState() {
+        if (bottomSheetBehavior.isOpen()) {
+            bottomSheetBehavior.close()
+        } else {
+            bottomSheetBehavior.open()
+        }
     }
 }

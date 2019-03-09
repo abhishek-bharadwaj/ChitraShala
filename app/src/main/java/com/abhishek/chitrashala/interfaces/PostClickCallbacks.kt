@@ -4,5 +4,7 @@ import com.abhishek.chitrashala.ui.PostUIModel
 
 interface PostClickCallbacks {
 
+    fun onPostClick(postUIModel: PostUIModel)
+
     fun onPostLongClick(postUIModel: PostUIModel)
 }
