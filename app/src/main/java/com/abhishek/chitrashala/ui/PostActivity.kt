@@ -22,6 +22,7 @@ class PostActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         adapter = PostAdapter(this)
+        adapter.setHasStableIds(true)
         rv_posts.layoutManager = LinearLayoutManager(this)
         rv_posts.adapter = adapter
 
