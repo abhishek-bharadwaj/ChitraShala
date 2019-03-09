@@ -16,12 +16,15 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class PostActivity : BaseActivity(), PostClickCallbacks {
+class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener {
 
     private lateinit var adapter: PostAdapter
     private lateinit var postViewModel: PostsViewModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private val compositeDisposable = CompositeDisposable()
+
+    private var clickedPost: PostUIModel? = null
+    private var longClickedPost: PostUIModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,7 @@ class PostActivity : BaseActivity(), PostClickCallbacks {
         })
 
         setUpBottomSheet()
+        setUpClickListeners()
     }
 
     override fun onDestroy() {
@@ -48,11 +52,25 @@ class PostActivity : BaseActivity(), PostClickCallbacks {
     }
 
     override fun onPostClick(postUIModel: PostUIModel) {
+        clickedPost = postUIModel
         bottomSheetBehavior.close()
     }
 
     override fun onPostLongClick(postUIModel: PostUIModel) {
+        longClickedPost = postUIModel
         toggleBottomSheetState()
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            view_overlay -> {
+                bottomSheetBehavior.close()
+            }
+            tv_download -> {
+                val imageUrl = longClickedPost?.imageUrl ?: return
+                ActionHelper.saveFileToDevice(this, imageUrl)
+            }
+        }
     }
 
     private fun setUpBottomSheet() {
@@ -80,5 +98,12 @@ class PostActivity : BaseActivity(), PostClickCallbacks {
         } else {
             bottomSheetBehavior.open()
         }
+    }
+
+    private fun setUpClickListeners() {
+        view_overlay.setOnClickListener(this)
+        tv_download.setOnClickListener(this)
+        tv_fav.setOnClickListener(this)
+        tv_wallpaper.setOnClickListener(this)
     }
 }
