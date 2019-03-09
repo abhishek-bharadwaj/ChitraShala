@@ -1,13 +1,13 @@
 package com.abhishek.chitrashala.ui
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.data.models.Children
-import com.bumptech.glide.Glide
+import com.abhishek.chitrashala.utils.ImageLoader
 import kotlinx.android.synthetic.main.layout_post_item.view.*
 
 class PostAdapter(private val context: Context) : RecyclerView.Adapter<PostAdapter.PostVH>() {
@@ -22,9 +22,7 @@ class PostAdapter(private val context: Context) : RecyclerView.Adapter<PostAdapt
     override fun getItemCount() = posts.size
 
     override fun onBindViewHolder(viewHolder: PostVH, position: Int) {
-        Glide.with(context)
-            .load(posts[position].data.url)
-            .into(viewHolder.itemView.iv_post)
+        ImageLoader.loadImage(context, posts[position].data.url, viewHolder.itemView.iv_post)
         viewHolder.itemView.iv_post
     }
 
