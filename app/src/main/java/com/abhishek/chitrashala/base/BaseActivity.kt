@@ -1,4 +1,4 @@
-package com.abhishek.chitrashala
+package com.abhishek.chitrashala.base
 
 import android.os.Build
 import android.os.Bundle

@@ -2,8 +2,8 @@ package com.abhishek.chitrashala.ui
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.abhishek.chitrashala.BaseActivity
 import com.abhishek.chitrashala.R
+import com.abhishek.chitrashala.base.BaseActivity
 import com.abhishek.chitrashala.data.Api
 import com.abhishek.chitrashala.data.models.RedditData
 import io.reactivex.SingleObserver
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 
-class MainActivity : BaseActivity() {
+class PostActivity : BaseActivity() {
 
     private lateinit var adapter: PostAdapter
     private val compositeDisposable = CompositeDisposable()
