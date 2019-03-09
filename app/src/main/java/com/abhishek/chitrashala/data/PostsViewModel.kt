@@ -2,7 +2,6 @@ package com.abhishek.chitrashala.data
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.abhishek.chitrashala.data.database.ChitraShalaDB
@@ -14,11 +13,12 @@ import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class PostsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
-    private val subreddits = arrayOf("sketches", "PopArtNouveau, isometric")
+    private val subreddits = arrayListOf("sketches", "PopArtNouveau", "isometric")
 
     @SuppressLint("CheckResult")
     fun getRedditPosts(): LiveData<List<PostEntity>> {
@@ -26,9 +26,12 @@ class PostsViewModel(app: Application) : AndroidViewModel(app) {
             dao.getCountOfPosts()
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
-                if (count == 0)
+                if (count == 0) {
                     getNewRedditPosts(subreddits.joinToString { "$it+" })
-            }, {})
+                }
+            }, {
+                Timber.e(it.toString())
+            })
         return dao.getPosts()
     }
 
@@ -48,14 +51,14 @@ class PostsViewModel(app: Application) : AndroidViewModel(app) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<Boolean> {
                 override fun onSuccess(t: Boolean) {
-                    Log.d("OOOOOOO", "Fetch new data success")
+                    Timber.d("Fetch new data success")
                 }
 
                 override fun onSubscribe(d: Disposable) {
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e("OOOOOOO", e.toString())
+                    Timber.e(e.toString())
                 }
             })
     }

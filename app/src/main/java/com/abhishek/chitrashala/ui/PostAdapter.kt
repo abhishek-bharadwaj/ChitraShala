@@ -28,6 +28,10 @@ class PostAdapter(private val context: Context, val postClickCallbacks: PostClic
         viewHolder.itemView.setTag(R.id.tag_url, post)
     }
 
+    override fun getItemId(position: Int): Long {
+        return posts[position].imageUrl.hashCode().toLong()
+    }
+
     fun updateData(posts: List<PostUIModel>) {
         this.posts.addAll(posts)
         notifyItemRangeInserted(this.posts.size, posts.size)
