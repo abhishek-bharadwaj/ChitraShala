@@ -1,11 +1,15 @@
 package com.abhishek.chitrashala.data
 
+import com.abhishek.chitrashala.data.models.RedditData
 import com.google.gson.GsonBuilder
+import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 
 
 object Api {
@@ -16,7 +20,7 @@ object Api {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        Retrofit.Builder().baseUrl("https://api.github.com/")
+        Retrofit.Builder().baseUrl("https://www.reddit.com/r/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().serializeNulls().create()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
@@ -24,7 +28,10 @@ object Api {
             .create(ApiService::class.java)
     }
 
-    interface ApiService {
+    fun getRedditData() = apiService.getRedditData()
 
+    interface ApiService {
+        @GET("sketches.json?limit=5")
+        fun getRedditData(): Single<Response<RedditData>>
     }
 }
