@@ -15,7 +15,7 @@ import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_post.*
 
 
 class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, MessageReceiver {
@@ -30,7 +30,7 @@ class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_post)
 
         adapter = PostAdapter(this, this)
         adapter.setHasStableIds(true)
