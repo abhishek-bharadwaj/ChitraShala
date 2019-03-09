@@ -28,15 +28,12 @@ class PostsViewModel(app: Application) : AndroidViewModel(app) {
             .map { response ->
                 val postEntities = response.body()?.let {
                     Converters.convertRedditDataToEntity(it)
-                }.run {
-                    emptyList<PostEntity>()
                 }
-                return@map if (postEntities.isNotEmpty()) {
-                    dao.insert(postEntities)
-                    true
-                } else {
-                    false
+                postEntities?.let {
+                    dao.insert(it)
+                    return@map true
                 }
+                return@map false
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
