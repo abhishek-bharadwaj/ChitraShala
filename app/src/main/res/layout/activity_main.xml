@@ -79,4 +79,21 @@
         android:layout_height="match_parent"
         android:background="#99000000"
         android:visibility="gone" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_white_24dp"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_anchor="@id/bar"
+        app:tint="@color/bg_white"
+        app:tintMode="src_in" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
