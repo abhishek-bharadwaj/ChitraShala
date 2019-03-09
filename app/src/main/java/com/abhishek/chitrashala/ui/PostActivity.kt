@@ -1,5 +1,6 @@
 package com.abhishek.chitrashala.ui
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -67,9 +68,21 @@ class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener {
                 bottomSheetBehavior.close()
             }
             tv_download -> {
-                val imageUrl = longClickedPost?.imageUrl ?: return
-                ActionHelper.saveFileToDevice(this, imageUrl)
+                if (hasWriteExternalStoragePermission(this)) {
+                    downloadFile()
+                }
             }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<out String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            downloadFile()
+        } else {
+            showMessage(getString(R.string.please_give_permission))
         }
     }
 
@@ -105,5 +118,11 @@ class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener {
         tv_download.setOnClickListener(this)
         tv_fav.setOnClickListener(this)
         tv_wallpaper.setOnClickListener(this)
+    }
+
+    private fun downloadFile() {
+        val imageUrl = longClickedPost?.imageUrl ?: return
+        ActionHelper.saveFileToDevice(this, imageUrl)
+        bottomSheetBehavior.close()
     }
 }

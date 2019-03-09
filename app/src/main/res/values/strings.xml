@@ -4,4 +4,6 @@
     <string name="add_to_favorite">Add to Favorite</string>
     <string name="download">Save to Device</string>
     <string name="set_as_wallpaper">Set as Wallpaper</string>
+    <string name="downloading_wait">Downloading your file. Please wait..</string>
+    <string name="please_give_permission">Please give the permission by going into app setting.</string>
 </resources>

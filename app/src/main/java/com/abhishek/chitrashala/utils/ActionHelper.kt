@@ -1,9 +1,13 @@
 package com.abhishek.chitrashala.utils
 
+import android.app.DownloadManager
 import android.content.Context
-import com.abhishek.chitrashala.interfaces.FileDownloadListener
+import android.content.Context.DOWNLOAD_SERVICE
+import android.net.Uri
+import android.os.Environment
+import com.abhishek.chitrashala.R
 import timber.log.Timber
-import java.io.File
+
 
 object ActionHelper {
 
@@ -12,14 +16,18 @@ object ActionHelper {
     }
 
     fun saveFileToDevice(context: Context, imageUrl: String) {
-        ImageLoader.downloadImage(context, imageUrl, object : FileDownloadListener {
-            override fun onSuccess(file: File) {
-                Timber.d("File downloaded. ${file.absolutePath}")
-            }
-
-            override fun onError(t: Throwable) {
-                Timber.e(t)
-            }
-        })
+        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
+            Timber.e("Storage is not mounted")
+        }
+        val request = DownloadManager.Request(Uri.parse(imageUrl))
+        val appName = context.getString(R.string.app_name)
+        request.setTitle(appName)
+        request.setDescription(context.getString(R.string.downloading_wait))
+        val fileName = "${appName.replace(" ", "")}-${System.currentTimeMillis()}.jpg"
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.allowScanningByMediaScanner()
+        val manager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
+        manager?.enqueue(request)
     }
 }
