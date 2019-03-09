@@ -1,12 +1,18 @@
 package com.abhishek.chitrashala.utils
 
 import android.app.DownloadManager
+import android.app.WallpaperManager
 import android.content.Context
 import android.content.Context.DOWNLOAD_SERVICE
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
+import com.abhishek.chitrashala.ChitraShalaApp
 import com.abhishek.chitrashala.R
+import com.abhishek.chitrashala.interfaces.BitmapDownloadListener
+import com.abhishek.chitrashala.interfaces.MessageReceiver
 import timber.log.Timber
+import java.io.IOException
 
 
 object ActionHelper {
@@ -29,5 +35,26 @@ object ActionHelper {
         request.allowScanningByMediaScanner()
         val manager = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
         manager?.enqueue(request)
+    }
+
+    fun setAsWallpaper(context: Context, imageUrl: String, messageReceiver: MessageReceiver) {
+        val myWallpaperManager = WallpaperManager.getInstance(ChitraShalaApp.context)
+        ImageLoader.downloadImage(context, imageUrl, object : BitmapDownloadListener {
+
+            override fun onSuccess(bitmap: Bitmap) {
+                try {
+                    myWallpaperManager.setBitmap(bitmap)
+                    messageReceiver.onMessageReceived(context.getString(R.string.wallpaper_set))
+                } catch (e: IOException) {
+                    Timber.e(e)
+                    messageReceiver.onMessageReceived(context.getString(R.string.something_wrong_try_again))
+                }
+            }
+
+            override fun onError(t: Throwable) {
+                Timber.e(t)
+                messageReceiver.onMessageReceived(context.getString(R.string.something_wrong_try_again))
+            }
+        })
     }
 }

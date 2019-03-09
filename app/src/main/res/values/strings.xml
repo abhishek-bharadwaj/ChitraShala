@@ -6,4 +6,6 @@
     <string name="set_as_wallpaper">Set as Wallpaper</string>
     <string name="downloading_wait">Downloading your file. Please wait..</string>
     <string name="please_give_permission">Please give the permission by going into app setting.</string>
+    <string name="wallpaper_set">Wallpaper set successfully.</string>
+    <string name="something_wrong_try_again">Something went wrong please try again</string>
 </resources>

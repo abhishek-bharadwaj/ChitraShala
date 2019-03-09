@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
 import com.abhishek.chitrashala.data.PostsViewModel
+import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -17,7 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener {
+class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, MessageReceiver {
 
     private lateinit var adapter: PostAdapter
     private lateinit var postViewModel: PostsViewModel
@@ -72,6 +73,11 @@ class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener {
                     downloadFile()
                 }
             }
+            tv_wallpaper -> {
+                val imageUrl = longClickedPost?.imageUrl ?: return
+                ActionHelper.setAsWallpaper(this, imageUrl, this)
+                bottomSheetBehavior.close()
+            }
         }
     }
 
@@ -84,6 +90,10 @@ class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener {
         } else {
             showMessage(getString(R.string.please_give_permission))
         }
+    }
+
+    override fun onMessageReceived(message: String) {
+        showMessage(message)
     }
 
     private fun setUpBottomSheet() {
