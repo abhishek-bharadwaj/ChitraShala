@@ -1,8 +1,8 @@
 package com.abhishek.chitrashala.ui
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.abhishek.chitrashala.BaseActivity
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.data.Api
 import com.abhishek.chitrashala.data.models.RedditData
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var adapter: PostAdapter
     private val compositeDisposable = CompositeDisposable()
