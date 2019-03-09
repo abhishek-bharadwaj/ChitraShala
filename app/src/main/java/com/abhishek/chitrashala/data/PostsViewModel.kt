@@ -27,7 +27,7 @@ class PostsViewModel(app: Application) : AndroidViewModel(app) {
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
                 if (count == 0)
-                    subreddits.forEach { getNewRedditPosts(it) }
+                    getNewRedditPosts(subreddits.joinToString { "$it+" })
             }, {})
         return dao.getPosts()
     }

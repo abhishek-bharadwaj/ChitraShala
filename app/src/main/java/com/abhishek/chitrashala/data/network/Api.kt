@@ -36,7 +36,7 @@ object Api {
     fun getRedditData(subreddit: String) = apiService.getRedditData(subreddit)
 
     interface ApiService {
-        @GET("{subreddit}.json?limit=5")
+        @GET("{subreddit}/new.json?limit=20")
         fun getRedditData(@Path("subreddit") subreddit: String): Single<Response<RedditData>>
     }
 }

@@ -25,7 +25,7 @@ class PostAdapter(private val context: Context, val postClickCallbacks: PostClic
     override fun onBindViewHolder(viewHolder: PostVH, position: Int) {
         val post = posts[position]
         ImageLoader.loadImage(context, post.imageUrl, viewHolder.itemView.iv_post)
-        viewHolder.itemView.tag = post
+        viewHolder.itemView.setTag(R.id.tag_url, post)
     }
 
     fun updateData(posts: List<PostUIModel>) {
@@ -39,7 +39,7 @@ class PostAdapter(private val context: Context, val postClickCallbacks: PostClic
         }
 
         override fun onLongClick(v: View?): Boolean {
-            val postUIModel = v?.tag as PostUIModel? ?: return true
+            val postUIModel = v?.getTag(R.id.tag_url) as PostUIModel? ?: return true
             postClickCallbacks.onPostLongClick(postUIModel)
             return true
         }
