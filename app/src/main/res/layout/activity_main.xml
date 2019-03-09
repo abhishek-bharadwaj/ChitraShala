@@ -12,6 +12,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
             android:paddingTop="25dp"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
@@ -29,7 +30,7 @@
                 android:fontFamily="@font/great_vibes"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/text_color"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="24sp" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,7 +48,8 @@
         android:id="@+id/ll_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_white"
+        android:background="@color/colorPrimary"
+        android:elevation="6dp"
         android:orientation="vertical"
         app:behavior_hideable="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -70,4 +72,11 @@
             android:drawableStart="@drawable/ic_wallpaper_black_24dp"
             android:text="@string/set_as_wallpaper" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/view_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 package com.abhishek.chitrashala.ui
 
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -9,10 +10,7 @@ import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
 import com.abhishek.chitrashala.data.PostsViewModel
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
-import com.abhishek.chitrashala.utils.Converters
-import com.abhishek.chitrashala.utils.close
-import com.abhishek.chitrashala.utils.isOpen
-import com.abhishek.chitrashala.utils.open
+import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -60,6 +58,20 @@ class PostActivity : BaseActivity(), PostClickCallbacks {
     private fun setUpBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(ll_bottom_sheet)
         bottomSheetBehavior.peekHeight = 0
+        bottomSheetBehavior.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (bottomSheetBehavior.isOpen()) {
+                    view_overlay.visible()
+                } else {
+                    view_overlay.gone()
+                }
+            }
+        })
     }
 
     private fun toggleBottomSheetState() {
