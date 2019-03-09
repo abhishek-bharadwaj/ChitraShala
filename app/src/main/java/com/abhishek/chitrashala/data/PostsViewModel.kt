@@ -1,5 +1,6 @@
 package com.abhishek.chitrashala.data
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -8,6 +9,7 @@ import com.abhishek.chitrashala.data.database.ChitraShalaDB
 import com.abhishek.chitrashala.data.database.PostEntity
 import com.abhishek.chitrashala.data.network.Api
 import com.abhishek.chitrashala.utils.Converters
+import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -17,13 +19,16 @@ class PostsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
 
+    @SuppressLint("CheckResult")
     fun getRedditPosts(): LiveData<List<PostEntity>> {
-        val postsLiveData = dao.getPosts()
-        if (postsLiveData.value?.size ?: 0 == 0) getNewPosts()
-        return postsLiveData
+        Single.fromCallable {
+            dao.getCountOfPosts()
+        }.subscribeOn(Schedulers.io())
+            .subscribe({ count -> if (count == 0) getNewRedditPosts() }, {})
+        return dao.getPosts()
     }
 
-    private fun getNewPosts() {
+    private fun getNewRedditPosts() {
         Api.getRedditData()
             .map { response ->
                 val postEntities = response.body()?.let {

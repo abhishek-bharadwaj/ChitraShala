@@ -18,6 +18,9 @@ interface PostDataDao {
     @Query("SELECT * FROM ${DBConstants.TABLE_NAME}")
     fun getPosts(): LiveData<List<PostEntity>>
 
+    @Query("SELECT COUNT(${DBConstants.COLUMN_IMAGE_URL}) FROM ${DBConstants.TABLE_NAME}")
+    fun getCountOfPosts(): Int
+
     @Query("DELETE from ${DBConstants.TABLE_NAME}")
     fun deleteAll()
 }
