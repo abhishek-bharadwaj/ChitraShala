@@ -108,7 +108,11 @@ class PostActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (bottomSheetBehavior.isOpen()) {
                     view_overlay.visible()
+                    view_overlay.alpha = 0f
+                    view_overlay.animate().alpha(1f).setDuration(300).start()
                 } else {
+                    view_overlay.alpha = 1f
+                    view_overlay.animate().alpha(0f).setDuration(300).start()
                     view_overlay.gone()
                 }
             }
