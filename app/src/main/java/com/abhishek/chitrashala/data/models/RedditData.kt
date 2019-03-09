@@ -8,20 +8,14 @@ class RedditData(
 class Data(
     val after: String,
     val before: Any,
-    val children: List<Children>,
-    val dist: Int,
-    val modhash: String
+    val children: List<Children>
 )
 
 class Children(
-    val `data`: DataX,
-    val kind: String
+    val `data`: DataX
 )
 
 class DataX(
-    val approved_at_utc: Any,
-    val approved_by: Any,
-    val archived: Boolean,
     val author: String,
     val author_flair_background_color: Any,
     val author_flair_css_class: Any,
@@ -92,7 +86,6 @@ class DataX(
     val saved: Boolean,
     val score: Int,
     val secure_media: Any,
-    val secure_media_embed: SecureMediaEmbed,
     val selftext: String,
     val selftext_html: Any,
     val send_replies: Boolean,
@@ -117,8 +110,7 @@ class DataX(
     val wls: Any
 )
 
-class MediaEmbed(
-)
+class MediaEmbed
 
 class Gildings(
     val gid_1: Int,
@@ -134,8 +126,7 @@ class Preview(
 class Image(
     val id: String,
     val resolutions: List<Resolution>,
-    val source: Source,
-    val variants: Variants
+    val source: Source
 )
 
 class Source(
@@ -148,10 +139,4 @@ class Resolution(
     val height: Int,
     val url: String,
     val width: Int
-)
-
-class Variants(
-)
-
-class SecureMediaEmbed(
 )
