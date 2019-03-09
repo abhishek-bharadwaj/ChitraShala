@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
 class PostsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
-    private val subreddits = arrayOf("sketches", "PopArtNouveau")
+    private val subreddits = arrayOf("sketches", "PopArtNouveau, isometric")
 
     @SuppressLint("CheckResult")
     fun getRedditPosts(): LiveData<List<PostEntity>> {
