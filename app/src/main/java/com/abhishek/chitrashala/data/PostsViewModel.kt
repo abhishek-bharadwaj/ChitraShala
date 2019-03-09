@@ -18,18 +18,22 @@ import io.reactivex.schedulers.Schedulers
 class PostsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
+    private val subreddits = arrayOf("sketches", "PopArtNouveau")
 
     @SuppressLint("CheckResult")
     fun getRedditPosts(): LiveData<List<PostEntity>> {
         Single.fromCallable {
             dao.getCountOfPosts()
         }.subscribeOn(Schedulers.io())
-            .subscribe({ count -> if (count == 0) getNewRedditPosts() }, {})
+            .subscribe({ count ->
+                if (count == 0)
+                    subreddits.forEach { getNewRedditPosts(it) }
+            }, {})
         return dao.getPosts()
     }
 
-    private fun getNewRedditPosts() {
-        Api.getRedditData()
+    private fun getNewRedditPosts(subreddit: String) {
+        Api.getRedditData(subreddit)
             .map { response ->
                 val postEntities = response.body()?.let {
                     Converters.convertRedditDataToEntity(it)

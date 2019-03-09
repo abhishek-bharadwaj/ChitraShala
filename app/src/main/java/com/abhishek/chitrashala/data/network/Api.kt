@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 
@@ -32,10 +33,10 @@ object Api {
             .create(Api.ApiService::class.java)
     }
 
-    fun getRedditData() = apiService.getRedditData()
+    fun getRedditData(subreddit: String) = apiService.getRedditData(subreddit)
 
     interface ApiService {
-        @GET("sketches.json?limit=5")
-        fun getRedditData(): Single<Response<RedditData>>
+        @GET("{subreddit}.json?limit=5")
+        fun getRedditData(@Path("subreddit") subreddit: String): Single<Response<RedditData>>
     }
 }
