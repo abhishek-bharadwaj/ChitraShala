@@ -1,4 +1,4 @@
-package com.abhishek.chitrashala.data
+package com.abhishek.chitrashala.data.network
 
 import com.abhishek.chitrashala.data.models.RedditData
 import com.google.gson.GsonBuilder
@@ -29,7 +29,7 @@ object Api {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)
             .build()
-            .create(ApiService::class.java)
+            .create(Api.ApiService::class.java)
     }
 
     fun getRedditData() = apiService.getRedditData()

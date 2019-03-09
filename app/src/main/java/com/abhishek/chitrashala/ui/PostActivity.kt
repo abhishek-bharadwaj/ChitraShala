@@ -1,22 +1,20 @@
 package com.abhishek.chitrashala.ui
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
-import com.abhishek.chitrashala.data.Api
-import com.abhishek.chitrashala.data.models.RedditData
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.abhishek.chitrashala.data.PostsViewModel
+import com.abhishek.chitrashala.utils.Converters
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Response
 
 class PostActivity : BaseActivity() {
 
     private lateinit var adapter: PostAdapter
+    private lateinit var postViewModel: PostsViewModel
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,23 +25,12 @@ class PostActivity : BaseActivity() {
         rv_posts.layoutManager = LinearLayoutManager(this)
         rv_posts.adapter = adapter
 
-        Api.getRedditData()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : SingleObserver<Response<RedditData>> {
-                override fun onSuccess(t: Response<RedditData>) {
-                    if (t.isSuccessful && t.body() != null)
-                        adapter.updateData(t.body()?.data?.children ?: emptyList())
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    compositeDisposable.add(d)
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
+        postViewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
+        postViewModel.getRedditPosts().observe(this, Observer { posts ->
+            adapter.updateData(posts.map {
+                Converters.convertPostEntityToUIModel(it)
             })
+        })
     }
 
     override fun onDestroy() {
