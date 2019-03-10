@@ -37,8 +37,6 @@ class PostAdapter(private val context: Context, val postClickCallbacks: PostClic
         notifyItemRangeInserted(this.posts.size, posts.size)
     }
 
-    fun getLastItem() = this.posts[itemCount - 1]
-
     inner class PostVH(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener, View.OnLongClickListener {
         init {

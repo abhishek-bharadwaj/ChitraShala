@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import com.abhishek.chitrashala.data.database.ChitraShalaDB
 import com.abhishek.chitrashala.data.database.PostEntity
 import com.abhishek.chitrashala.data.network.Api
+import com.abhishek.chitrashala.data.preferences.AppPreference
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.utils.Converters
 import io.reactivex.Single
@@ -21,10 +22,12 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
     private val subreddits = arrayListOf("sketches", "PopArtNouveau", "isometric")
+    private val pref = AppPreference()
     private var isLoadingNewPosts = false
 
     @SuppressLint("CheckResult")
-    fun getRedditPosts(after: String?): LiveData<List<PostEntity>> {
+    fun getRedditPosts(): LiveData<List<PostEntity>> {
+        val after = AppPreference().getPostAfter()
         Single.fromCallable {
             dao.getCountOfPosts()
         }.subscribeOn(Schedulers.io())
@@ -45,14 +48,10 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
         } else {
             Api.getRedditData(subreddit, after)
         }.map { response ->
-            val postEntities = response.body()?.let {
-                Converters.convertRedditDataToEntity(it)
-            }
-            postEntities?.let {
-                dao.insert(it)
-                return@map true
-            }
-            return@map false
+            val redditData = response.body() ?: return@map false
+            dao.insert(Converters.convertRedditDataToEntity(redditData))
+            pref.savePostAfter(redditData.postData.after)
+            return@map true
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<Boolean> {

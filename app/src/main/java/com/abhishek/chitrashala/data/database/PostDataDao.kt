@@ -15,7 +15,7 @@ interface PostDataDao {
     @Update
     fun update(entity: PostEntity)
 
-    @Query("SELECT * FROM ${DBConstants.TABLE_NAME}")
+    @Query("SELECT * FROM ${DBConstants.TABLE_NAME} order by ${DBConstants.COLUMN_CREATED_AT} DESC")
     fun getPosts(): LiveData<List<PostEntity>>
 
     @Query("SELECT COUNT(${DBConstants.COLUMN_IMAGE_URL}) FROM ${DBConstants.TABLE_NAME}")

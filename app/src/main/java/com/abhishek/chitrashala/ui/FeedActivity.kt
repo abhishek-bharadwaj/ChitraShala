@@ -43,7 +43,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    feedViewModel.getRedditPosts(adapter.getLastItem().id)
+                    feedViewModel.getRedditPosts()
                 }
             }
         })
@@ -51,12 +51,11 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         feedViewModel = ViewModelProviders.of(this,
             FeedsViewModelFactory(ChitraShalaApp.context, this))
             .get(FeedsViewModel::class.java)
-        feedViewModel.getRedditPosts(after = null)
-            .observe(this, Observer { posts ->
-                adapter.updateData(posts.map {
-                    Converters.convertPostEntityToUIModel(it)
-                })
+        feedViewModel.getRedditPosts().observe(this, Observer { posts ->
+            adapter.updateData(posts.map {
+                Converters.convertPostEntityToUIModel(it)
             })
+        })
 
         setUpBottomSheet()
         setUpClickListeners()

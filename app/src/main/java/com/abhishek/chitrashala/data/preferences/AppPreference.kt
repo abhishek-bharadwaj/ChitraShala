@@ -9,14 +9,19 @@ class AppPreference : BaseSharedPreference(ChitraShalaApp.context.getSharedPrefe
     "app_pref", Context.MODE_PRIVATE)) {
 
     companion object {
-        const val SUBSCRIBED_SET = "subscribed_set"
+        private const val KEY_SUBSCRIBED_SET = "subscribed_set"
+        private const val KEY_POST_AFTER = "post_after"
     }
 
     fun saveSubscribedSubreddits(subscribed: LinkedHashSet<String>) {
-        getEditior().putStringSet(SUBSCRIBED_SET, subscribed).apply()
+        getEditior().putStringSet(KEY_SUBSCRIBED_SET, subscribed).apply()
     }
 
     fun getSubscribedSubreddits() {
-        getPref().getStringSet(SUBSCRIBED_SET, emptySet())
+        getPref().getStringSet(KEY_SUBSCRIBED_SET, emptySet())
     }
+
+    fun savePostAfter(postAfter: String) = getEditior().putString(KEY_POST_AFTER, postAfter).apply()
+
+    fun getPostAfter() = getPref().getString(KEY_POST_AFTER, null)
 }

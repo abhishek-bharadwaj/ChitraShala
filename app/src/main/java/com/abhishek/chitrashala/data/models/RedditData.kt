@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 class RedditData(@SerializedName("data") val postData: Data) {
 
-    class Data(@SerializedName("children") val children: List<Children>) {
+    class Data(@SerializedName("children") val children: List<Children>,
+               @SerializedName("after") val after: String,
+               @SerializedName("before") val before: String) {
 
         class Children(@SerializedName("data") val postInfo: PostInfo) {
 
