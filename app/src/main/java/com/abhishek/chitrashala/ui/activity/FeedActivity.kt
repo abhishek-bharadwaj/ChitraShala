@@ -16,7 +16,7 @@ import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.ui.adapter.PostAdapter
 import com.abhishek.chitrashala.ui.model.PostUIModel
 import com.abhishek.chitrashala.ui.view_model.FeedsViewModel
-import com.abhishek.chitrashala.ui.view_model.ViewModelFactory
+import com.abhishek.chitrashala.ui.view_model.FeedsViewModelFactory
 import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_feed.*
@@ -49,7 +49,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         })
 
         feedViewModel = ViewModelProviders.of(this,
-            ViewModelFactory(ChitraShalaApp.context, this))
+            FeedsViewModelFactory(ChitraShalaApp.context, this))
             .get(FeedsViewModel::class.java)
         feedViewModel.getRedditPosts().observe(this, Observer { posts ->
             adapter.updateData(posts.map {

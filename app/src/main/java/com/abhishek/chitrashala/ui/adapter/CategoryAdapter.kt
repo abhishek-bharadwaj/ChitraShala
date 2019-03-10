@@ -30,6 +30,11 @@ class CategoryAdapter(private val context: Context,
         ImageLoader.loadImage(context, category.bannerBgImage, holder.itemView.iv_banner)
     }
 
+    fun updateData(categories: List<CategoryUIModel>) {
+        this.categories.addAll(categories)
+        notifyItemRangeInserted(this.categories.size, categories.size)
+    }
+
     inner class CategoryVH(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener, View.OnLongClickListener {
         init {

@@ -35,10 +35,10 @@ object Api {
             .create(Api.ApiService::class.java)
     }
 
-    fun getRedditData(subreddit: String, limit: Int = 20) =
+    fun getRedditData(subreddit: String, limit: Int = 5) =
         apiService.getRedditData(subreddit, limit)
 
-    fun getRedditData(subreddit: String, after: String, limit: Int = 20) =
+    fun getRedditData(subreddit: String, after: String, limit: Int = 5) =
         apiService.getRedditData(subreddit, after, limit)
 
     fun getSubredditInfo(subreddit: String) = apiService.getSubredditInfo(subreddit)
