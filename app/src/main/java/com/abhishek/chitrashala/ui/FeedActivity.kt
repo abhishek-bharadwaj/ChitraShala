@@ -7,9 +7,12 @@ import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.abhishek.chitrashala.ChitraShalaApp
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
 import com.abhishek.chitrashala.data.FeedsViewModel
+import com.abhishek.chitrashala.data.FeedsViewModelFactory
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.utils.*
@@ -21,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_feed.*
 class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, MessageReceiver {
 
     private lateinit var adapter: PostAdapter
-    private lateinit var postViewModel: FeedsViewModel
+    private lateinit var feedViewModel: FeedsViewModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private val compositeDisposable = CompositeDisposable()
 
@@ -36,9 +39,19 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         adapter.setHasStableIds(true)
         rv_posts.layoutManager = LinearLayoutManager(this)
         rv_posts.adapter = adapter
+        rv_posts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    feedViewModel.getRedditPosts(adapter.getLastItem().id)
+                }
+            }
+        })
 
-        postViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
-        postViewModel.getRedditPosts(after = null)
+        feedViewModel = ViewModelProviders.of(this,
+            FeedsViewModelFactory(ChitraShalaApp.context, this))
+            .get(FeedsViewModel::class.java)
+        feedViewModel.getRedditPosts(after = null)
             .observe(this, Observer { posts ->
                 adapter.updateData(posts.map {
                     Converters.convertPostEntityToUIModel(it)

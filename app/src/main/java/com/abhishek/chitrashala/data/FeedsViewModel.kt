@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import com.abhishek.chitrashala.data.database.ChitraShalaDB
 import com.abhishek.chitrashala.data.database.PostEntity
 import com.abhishek.chitrashala.data.network.Api
+import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.utils.Converters
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -15,10 +16,12 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class FeedsViewModel(app: Application) : AndroidViewModel(app) {
+class FeedsViewModel(app: Application, private val messageReceiver: MessageReceiver) :
+    AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
     private val subreddits = arrayListOf("sketches", "PopArtNouveau", "isometric")
+    private var isLoadingNewPosts = false
 
     @SuppressLint("CheckResult")
     fun getRedditPosts(after: String?): LiveData<List<PostEntity>> {
@@ -36,6 +39,8 @@ class FeedsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun getNewRedditPosts(subreddit: String, after: String?) {
+        if (isLoadingNewPosts) return
+        isLoadingNewPosts = true
         if (after.isNullOrEmpty()) {
             Api.getRedditData(subreddit)
         } else {
@@ -53,13 +58,15 @@ class FeedsViewModel(app: Application) : AndroidViewModel(app) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<Boolean> {
                 override fun onSuccess(t: Boolean) {
-                    Timber.d("Fetch new data success")
+                    isLoadingNewPosts = false
+                    messageReceiver.onMessageReceived("Loading new posts..")
                 }
 
                 override fun onSubscribe(d: Disposable) {
                 }
 
                 override fun onError(e: Throwable) {
+                    isLoadingNewPosts = false
                     Timber.e(e.toString())
                 }
             })
