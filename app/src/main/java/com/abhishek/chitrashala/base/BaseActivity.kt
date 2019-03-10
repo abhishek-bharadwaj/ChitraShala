@@ -46,6 +46,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

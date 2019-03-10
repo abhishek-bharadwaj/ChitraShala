@@ -9,7 +9,7 @@ class ChitraShalaApp : Application() {
 
     companion object {
         lateinit var context: ChitraShalaApp
-        val subreddits = arrayListOf("handwriting", "sketches", "PopArtNouveau", "isometric")
+        val subreddits = arrayListOf("oldschoolcool", "PopArtNouveau", "isometric", "pic")
     }
 
     override fun onCreate() {
