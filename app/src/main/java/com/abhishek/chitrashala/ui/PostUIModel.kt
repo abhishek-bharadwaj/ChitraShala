@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class PostUIModel(val imageUrl: String,
+class PostUIModel(val id: String,
+                  val imageUrl: String,
                   val subreddit: String,
                   val createdAt: Long,
                   val isStarred: Boolean,
@@ -18,12 +19,12 @@ class PostUIModel(val imageUrl: String,
         if (this === other) return true
         if (other !is PostUIModel) return false
 
-        if (imageUrl != other.imageUrl) return false
+        if (id != other.id) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return imageUrl.hashCode()
+        return id.hashCode()
     }
 }

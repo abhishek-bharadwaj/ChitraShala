@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = DBConstants.TABLE_NAME)
 class PostEntity(
     @PrimaryKey
+    @ColumnInfo(name = DBConstants.COLUMN_ID) val id: String,
     @ColumnInfo(name = DBConstants.COLUMN_IMAGE_URL) val imageUrl: String,
     @ColumnInfo(name = DBConstants.COLUMN_TITLE) val title: String,
     @ColumnInfo(name = DBConstants.COLUMN_SUBREDDIT) val subreddit: String,

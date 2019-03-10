@@ -9,6 +9,7 @@ class RedditData(@SerializedName("data") val postData: Data) {
         class Children(@SerializedName("data") val postInfo: PostInfo) {
 
             class PostInfo(
+                val id: String,
                 val author: String,
                 val author_fullname: String,
                 val category: Any,

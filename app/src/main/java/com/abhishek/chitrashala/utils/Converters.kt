@@ -10,6 +10,7 @@ object Converters {
         return redditData.postData.children.map {
             val postInfo = it.postInfo
             PostEntity(
+                id = postInfo.id,
                 imageUrl = postInfo.url,
                 subreddit = postInfo.subreddit,
                 createdAt = postInfo.created_utc,
@@ -25,6 +26,7 @@ object Converters {
 
     fun convertPostEntityToUIModel(entity: PostEntity): PostUIModel {
         return PostUIModel(
+            id = entity.id,
             imageUrl = entity.imageUrl,
             subreddit = entity.subreddit,
             createdAt = entity.createdAt,

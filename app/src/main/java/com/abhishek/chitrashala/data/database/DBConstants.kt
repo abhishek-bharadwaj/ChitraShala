@@ -4,6 +4,7 @@ object DBConstants {
     const val DATABASE_NAME = "chitrashala.db"
     const val TABLE_NAME = "posts"
 
+    const val COLUMN_ID = "id"
     const val COLUMN_IMAGE_URL = "image_url"
     const val COLUMN_SUBREDDIT = "subreddit"
     const val COLUMN_CREATED_AT = "created_at"
