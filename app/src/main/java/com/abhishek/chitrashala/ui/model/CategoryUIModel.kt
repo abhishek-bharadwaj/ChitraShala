@@ -1,4 +1,4 @@
-package com.abhishek.chitrashala.ui.adapter
+package com.abhishek.chitrashala.ui.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

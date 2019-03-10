@@ -4,8 +4,8 @@ import com.abhishek.chitrashala.data.database.category.CategoryEntity
 import com.abhishek.chitrashala.data.database.post.PostEntity
 import com.abhishek.chitrashala.data.models.AboutApiResponse
 import com.abhishek.chitrashala.data.models.PostApiResponse
-import com.abhishek.chitrashala.ui.PostUIModel
-import com.abhishek.chitrashala.ui.adapter.CategoryUIModel
+import com.abhishek.chitrashala.ui.model.PostUIModel
+import com.abhishek.chitrashala.ui.model.CategoryUIModel
 
 object Converters {
 

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
-import com.abhishek.chitrashala.ui.PostUIModel
+import com.abhishek.chitrashala.ui.model.PostUIModel
 import com.abhishek.chitrashala.utils.ImageLoader
 import kotlinx.android.synthetic.main.activity_post.*
 

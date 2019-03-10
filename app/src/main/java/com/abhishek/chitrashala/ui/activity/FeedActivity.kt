@@ -13,13 +13,12 @@ import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
-import com.abhishek.chitrashala.ui.PostUIModel
 import com.abhishek.chitrashala.ui.adapter.PostAdapter
+import com.abhishek.chitrashala.ui.model.PostUIModel
 import com.abhishek.chitrashala.ui.view_model.FeedsViewModel
 import com.abhishek.chitrashala.ui.view_model.ViewModelFactory
 import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_feed.*
 
 
@@ -28,7 +27,6 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
     private lateinit var adapter: PostAdapter
     private lateinit var feedViewModel: FeedsViewModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
-    private val compositeDisposable = CompositeDisposable()
 
     private var clickedPost: PostUIModel? = null
     private var longClickedPost: PostUIModel? = null
@@ -61,11 +59,6 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
 
         setUpBottomSheet()
         setUpClickListeners()
-    }
-
-    override fun onDestroy() {
-        compositeDisposable.clear()
-        super.onDestroy()
     }
 
     override fun onPostClick(postUIModel: PostUIModel) {
