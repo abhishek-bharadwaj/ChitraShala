@@ -17,4 +17,5 @@ class PostEntity(
     @ColumnInfo(name = PostTable.COLUMN_POST_LINK) val postLink: String,
     @ColumnInfo(name = PostTable.COLUMN_LIKES) val likes: Int,
     @ColumnInfo(name = PostTable.COLUMN_AUTHOR) val author: String,
-    @ColumnInfo(name = PostTable.COLUMN_IS_OVER_18) val isOver18: Boolean)
+    @ColumnInfo(name = PostTable.COLUMN_IS_OVER_18) val isOver18: Boolean
+)
