@@ -17,7 +17,6 @@ class CategoryEntity(
     @ColumnInfo(name = CategoryTable.COLUMN_DESCRIPTION) val description: String,
     @ColumnInfo(name = CategoryTable.COLUMN_PRIMARY_COLOR) val primaryColor: String,
     @ColumnInfo(name = CategoryTable.COLUMN_CREATED_UTC) val createdAt: String,
-    @ColumnInfo(name = CategoryTable.COLUMN_HEADER_TITLE) val headerTitle: String,
     @ColumnInfo(name = CategoryTable.COLUMN_IS_OVER_18) val isOver18: Boolean,
     @ColumnInfo(name = CategoryTable.COLUMN_SUBSCRIBERS) val subscribers: Int,
     @ColumnInfo(name = CategoryTable.COLUMN_PUBLIC_DESCRIPTION) val publicDescription: String,

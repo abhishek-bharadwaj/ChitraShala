@@ -4,8 +4,8 @@ import com.abhishek.chitrashala.data.database.category.CategoryEntity
 import com.abhishek.chitrashala.data.database.post.PostEntity
 import com.abhishek.chitrashala.data.models.AboutApiResponse
 import com.abhishek.chitrashala.data.models.PostApiResponse
-import com.abhishek.chitrashala.ui.model.PostUIModel
 import com.abhishek.chitrashala.ui.model.CategoryUIModel
+import com.abhishek.chitrashala.ui.model.PostUIModel
 
 object Converters {
 
@@ -54,7 +54,6 @@ object Converters {
             description = subData.description,
             primaryColor = subData.primaryColor,
             createdAt = subData.createdAt,
-            headerTitle = subData.title,
             isOver18 = subData.isOver18,
             subscribers = subData.subscribers,
             publicDescription = subData.publicDescription,
@@ -74,7 +73,6 @@ object Converters {
             description = entity.description,
             primaryColor = entity.primaryColor,
             createdAt = entity.createdAt,
-            headerTitle = entity.headerTitle,
             isOver18 = entity.isOver18,
             subscribers = entity.subscribers,
             publicDescription = entity.publicDescription,

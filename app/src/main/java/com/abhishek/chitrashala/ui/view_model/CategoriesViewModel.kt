@@ -32,6 +32,8 @@ class CategoriesViewModel(app: Application, private val messageReceiver: Message
             dao.getCountOfCategories()
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
+                Timber.d("Count of category is %s", count)
+                dao.deleteAll()
                 if (count > 0) return@subscribe
                 getNewSubredditCategories(ChitraShalaApp.subreddits)
             }, {
@@ -46,6 +48,7 @@ class CategoriesViewModel(app: Application, private val messageReceiver: Message
                 .map { response ->
                     val aboutApiResponse = response.body() ?: return@map false
                     dao.insert(Converters.convertCategoryApiResponseToEntity(aboutApiResponse))
+                    Timber.d("Saved %s to DB", aboutApiResponse.subData.displayName)
                     return@map true
                 }
                 .subscribeOn(Schedulers.io())

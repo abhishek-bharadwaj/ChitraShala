@@ -10,7 +10,6 @@ class AboutApiResponse(@SerializedName("data") val subData: SubData) {
         @SerializedName("banner_background_image") val bannerBgImage: String,
         @SerializedName("banner_background_color") val bannerBgColor: String,
         @SerializedName("primary_color") val primaryColor: String,
-        @SerializedName("header_title") val title: String,
         @SerializedName("description") val description: String,
         @SerializedName("over18") val isOver18: Boolean,
         @SerializedName("display_name") val displayName: String,
