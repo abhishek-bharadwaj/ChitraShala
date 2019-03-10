@@ -31,8 +31,6 @@ class CategoriesViewModel(app: Application, private val messageReceiver: Message
             dao.getCountOfCategories()
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
-                Timber.d("Count of category is %s", count)
-                dao.deleteAll()
                 if (count > 0) return@subscribe
                 getNewSubredditCategories(ChitraShalaApp.subreddits)
             }, {
