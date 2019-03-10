@@ -10,7 +10,7 @@ class CategoryEntity(
     @PrimaryKey
     @ColumnInfo(name = CategoryTable.COLUMN_ID) val id: String,
     @ColumnInfo(name = CategoryTable.COLUMN_DISPLAY_NAME) val displayName: String,
-    @ColumnInfo(name = CategoryTable.COLUMN_ACTIVE_USER_COUNT) val activityUserCount: Int,
+    @ColumnInfo(name = CategoryTable.COLUMN_ACTIVE_USER_COUNT) val activeUserCount: Int,
     @ColumnInfo(name = CategoryTable.COLUMN_ALLOW_IMAGES) val allowImages: Boolean,
     @ColumnInfo(name = CategoryTable.COLUMN_BANNER_BACKGROUND_IMAGE) val bannerBgImage: String,
     @ColumnInfo(name = CategoryTable.COLUMN_BANNER_BACKGROUND_COLOR) val bannerBgColor: String,

@@ -25,6 +25,10 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
     private val pref = AppPreference()
     private var isLoadingNewPosts = false
 
+    init {
+        Timber.tag("FeedsViewModel")
+    }
+
     @SuppressLint("CheckResult")
     fun getRedditPosts(): LiveData<List<PostEntity>> {
         val after = AppPreference().getPostAfter()
@@ -49,7 +53,7 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
             Api.getRedditData(subreddit, after)
         }.map { response ->
             val redditData = response.body() ?: return@map false
-            dao.insert(Converters.convertRedditDataToEntity(redditData))
+            dao.insert(Converters.convertPostApiResponseToEntity(redditData))
             pref.savePostAfter(redditData.postData.after)
             return@map true
         }.subscribeOn(Schedulers.io())

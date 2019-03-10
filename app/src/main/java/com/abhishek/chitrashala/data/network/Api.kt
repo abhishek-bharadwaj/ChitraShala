@@ -41,6 +41,8 @@ object Api {
     fun getRedditData(subreddit: String, after: String, limit: Int = 20) =
         apiService.getRedditData(subreddit, after, limit)
 
+    fun getSubredditInfo(subreddit: String) = apiService.getSubredditInfo(subreddit)
+
     interface ApiService {
         @GET("{subreddit}/new.json")
         fun getRedditData(@Path("subreddit") subreddit: String,
@@ -53,6 +55,6 @@ object Api {
                 : Single<Response<PostApiResponse>>
 
         @GET("{subreddit}/about.json")
-        fun getSubredditInfo(@Path("subreddit") subreddit: String): Single<AboutApiResponse>
+        fun getSubredditInfo(@Path("subreddit") subreddit: String): Single<Response<AboutApiResponse>>
     }
 }

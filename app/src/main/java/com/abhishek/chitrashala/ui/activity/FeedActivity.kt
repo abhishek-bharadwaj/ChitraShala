@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhishek.chitrashala.ChitraShalaApp
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
-import com.abhishek.chitrashala.ui.view_model.FeedsViewModel
-import com.abhishek.chitrashala.ui.view_model.FeedsViewModelFactory
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
-import com.abhishek.chitrashala.ui.adapter.PostAdapter
 import com.abhishek.chitrashala.ui.PostUIModel
+import com.abhishek.chitrashala.ui.adapter.PostAdapter
+import com.abhishek.chitrashala.ui.view_model.FeedsViewModel
+import com.abhishek.chitrashala.ui.view_model.ViewModelFactory
 import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.disposables.CompositeDisposable
@@ -51,8 +51,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         })
 
         feedViewModel = ViewModelProviders.of(this,
-            FeedsViewModelFactory(ChitraShalaApp.context,
-                this))
+            ViewModelFactory(ChitraShalaApp.context, this))
             .get(FeedsViewModel::class.java)
         feedViewModel.getRedditPosts().observe(this, Observer { posts ->
             adapter.updateData(posts.map {
@@ -94,6 +93,9 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
                 val imageUrl = longClickedPost?.imageUrl ?: return
                 ActionHelper.setAsWallpaper(this, imageUrl, this)
                 bottomSheetBehavior.close()
+            }
+            fab -> {
+                ChooseCategoryActivity.startActivity(this)
             }
         }
     }
@@ -149,6 +151,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         tv_download.setOnClickListener(this)
         tv_fav.setOnClickListener(this)
         tv_wallpaper.setOnClickListener(this)
+        fab.setOnClickListener(this)
     }
 
     private fun downloadFile() {

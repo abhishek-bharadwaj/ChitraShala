@@ -17,10 +17,10 @@ interface CategoryDao {
     fun update(entity: CategoryEntity)
 
     @Query("SELECT * FROM ${CategoryTable.TABLE_NAME} order by ${CategoryTable.COLUMN_DISPLAY_NAME} DESC")
-    fun getPosts(): LiveData<List<CategoryEntity>>
+    fun getCategories(): LiveData<List<CategoryEntity>>
 
     @Query("SELECT COUNT(${CategoryTable.COLUMN_ID}) FROM ${CategoryTable.TABLE_NAME}")
-    fun getCountOfPosts(): Int
+    fun getCountOfCategories(): Int
 
     @Query("DELETE from ${CategoryTable.TABLE_NAME}")
     fun deleteAll()
