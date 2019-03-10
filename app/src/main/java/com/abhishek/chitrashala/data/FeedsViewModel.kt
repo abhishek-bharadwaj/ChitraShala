@@ -15,19 +15,19 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class PostsViewModel(app: Application) : AndroidViewModel(app) {
+class FeedsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
     private val subreddits = arrayListOf("sketches", "PopArtNouveau", "isometric")
 
     @SuppressLint("CheckResult")
-    fun getRedditPosts(): LiveData<List<PostEntity>> {
+    fun getRedditPosts(after: String?): LiveData<List<PostEntity>> {
         Single.fromCallable {
             dao.getCountOfPosts()
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
                 if (count == 0) {
-                    getNewRedditPosts(subreddits.joinToString { "$it+" })
+                    getNewRedditPosts(subreddits.joinToString { "$it+" }, after)
                 }
             }, {
                 Timber.e(it.toString())
@@ -35,19 +35,21 @@ class PostsViewModel(app: Application) : AndroidViewModel(app) {
         return dao.getPosts()
     }
 
-    private fun getNewRedditPosts(subreddit: String) {
-        Api.getRedditData(subreddit)
-            .map { response ->
-                val postEntities = response.body()?.let {
-                    Converters.convertRedditDataToEntity(it)
-                }
-                postEntities?.let {
-                    dao.insert(it)
-                    return@map true
-                }
-                return@map false
+    private fun getNewRedditPosts(subreddit: String, after: String?) {
+        if (after.isNullOrEmpty()) {
+            Api.getRedditData(subreddit)
+        } else {
+            Api.getRedditData(subreddit, after)
+        }.map { response ->
+            val postEntities = response.body()?.let {
+                Converters.convertRedditDataToEntity(it)
             }
-            .subscribeOn(Schedulers.io())
+            postEntities?.let {
+                dao.insert(it)
+                return@map true
+            }
+            return@map false
+        }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : SingleObserver<Boolean> {
                 override fun onSuccess(t: Boolean) {

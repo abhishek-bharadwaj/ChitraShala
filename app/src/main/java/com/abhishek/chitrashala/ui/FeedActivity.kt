@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
-import com.abhishek.chitrashala.data.PostsViewModel
+import com.abhishek.chitrashala.data.FeedsViewModel
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.utils.*
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_feed.*
 class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, MessageReceiver {
 
     private lateinit var adapter: PostAdapter
-    private lateinit var postViewModel: PostsViewModel
+    private lateinit var postViewModel: FeedsViewModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private val compositeDisposable = CompositeDisposable()
 
@@ -37,12 +37,13 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         rv_posts.layoutManager = LinearLayoutManager(this)
         rv_posts.adapter = adapter
 
-        postViewModel = ViewModelProviders.of(this).get(PostsViewModel::class.java)
-        postViewModel.getRedditPosts().observe(this, Observer { posts ->
-            adapter.updateData(posts.map {
-                Converters.convertPostEntityToUIModel(it)
+        postViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
+        postViewModel.getRedditPosts(after = null)
+            .observe(this, Observer { posts ->
+                adapter.updateData(posts.map {
+                    Converters.convertPostEntityToUIModel(it)
+                })
             })
-        })
 
         setUpBottomSheet()
         setUpClickListeners()
