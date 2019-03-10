@@ -21,6 +21,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
 
     ext.okhttp3Version = "3.9.0"

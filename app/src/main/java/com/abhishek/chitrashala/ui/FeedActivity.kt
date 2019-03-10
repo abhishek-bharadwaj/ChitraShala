@@ -56,6 +56,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
     override fun onPostClick(postUIModel: PostUIModel) {
         clickedPost = postUIModel
         bottomSheetBehavior.close()
+        PostActivity.startActivity(this, postUIModel)
     }
 
     override fun onPostLongClick(postUIModel: PostUIModel) {

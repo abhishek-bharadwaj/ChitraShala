@@ -24,6 +24,16 @@ object Converters {
     }
 
     fun convertPostEntityToUIModel(entity: PostEntity): PostUIModel {
-        return PostUIModel(entity.imageUrl)
+        return PostUIModel(
+            imageUrl = entity.imageUrl,
+            subreddit = entity.subreddit,
+            createdAt = entity.createdAt,
+            isStarred = entity.isStarred,
+            author = entity.author,
+            likes = entity.likes,
+            postLink = entity.postLink,
+            title = entity.title,
+            isOver18 = entity.isOver18
+        )
     }
 }
