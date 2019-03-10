@@ -5,7 +5,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.abhishek.chitrashala.data.database.ChitraShalaDB
-import com.abhishek.chitrashala.data.database.PostEntity
+import com.abhishek.chitrashala.data.database.post.PostEntity
 import com.abhishek.chitrashala.data.network.Api
 import com.abhishek.chitrashala.data.preferences.AppPreference
 import com.abhishek.chitrashala.interfaces.MessageReceiver
@@ -21,7 +21,7 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
     AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
-    private val subreddits = arrayListOf("sketches", "PopArtNouveau", "isometric")
+    private val subreddits = arrayListOf("handwriting", "sketches", "PopArtNouveau", "isometric")
     private val pref = AppPreference()
     private var isLoadingNewPosts = false
 

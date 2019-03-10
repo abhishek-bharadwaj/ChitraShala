@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.abhishek.chitrashala.ChitraShalaApp
+import com.abhishek.chitrashala.data.database.post.PostDataDao
+import com.abhishek.chitrashala.data.database.post.PostEntity
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 
@@ -14,8 +16,9 @@ abstract class ChitraShalaDB : RoomDatabase() {
     abstract fun postDataDao(): PostDataDao
 
     private object HOLDER {
-        val INSTANCE = Room.databaseBuilder(ChitraShalaApp.context,
-            ChitraShalaDB::class.java, DBConstants.DATABASE_NAME).build()
+        val INSTANCE = Room.databaseBuilder(
+            ChitraShalaApp.context, ChitraShalaDB::class.java, DATABASE_NAME)
+            .build()
     }
 
     companion object {
@@ -28,7 +31,7 @@ abstract class ChitraShalaDB : RoomDatabase() {
         @SuppressLint("CheckResult")
         fun clearDatabase() {
             Completable.fromCallable {
-                getInstance().postDataDao().deleteAll()
+                getInstance().clearAllTables()
             }.subscribeOn(Schedulers.io())
                 .subscribe()
         }

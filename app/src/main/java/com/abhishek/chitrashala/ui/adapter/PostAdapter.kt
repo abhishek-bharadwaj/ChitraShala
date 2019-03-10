@@ -1,4 +1,4 @@
-package com.abhishek.chitrashala.ui
+package com.abhishek.chitrashala.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
+import com.abhishek.chitrashala.ui.PostUIModel
 import com.abhishek.chitrashala.utils.ImageLoader
 import kotlinx.android.synthetic.main.layout_post_item.view.*
 

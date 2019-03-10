@@ -1,4 +1,4 @@
-package com.abhishek.chitrashala.ui
+package com.abhishek.chitrashala.ui.activity
 
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -15,6 +15,8 @@ import com.abhishek.chitrashala.data.FeedsViewModel
 import com.abhishek.chitrashala.data.FeedsViewModelFactory
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
+import com.abhishek.chitrashala.ui.adapter.PostAdapter
+import com.abhishek.chitrashala.ui.PostUIModel
 import com.abhishek.chitrashala.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.reactivex.disposables.CompositeDisposable

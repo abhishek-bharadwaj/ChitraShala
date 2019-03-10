@@ -1,7 +1,8 @@
-package com.abhishek.chitrashala.data.database
+package com.abhishek.chitrashala.data.database.post
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.abhishek.chitrashala.data.database.PostTable
 
 @Dao
 interface PostDataDao {
@@ -15,12 +16,12 @@ interface PostDataDao {
     @Update
     fun update(entity: PostEntity)
 
-    @Query("SELECT * FROM ${DBConstants.TABLE_NAME} order by ${DBConstants.COLUMN_CREATED_AT} DESC")
+    @Query("SELECT * FROM ${PostTable.TABLE_NAME} order by ${PostTable.COLUMN_CREATED_AT} DESC")
     fun getPosts(): LiveData<List<PostEntity>>
 
-    @Query("SELECT COUNT(${DBConstants.COLUMN_IMAGE_URL}) FROM ${DBConstants.TABLE_NAME}")
+    @Query("SELECT COUNT(${PostTable.COLUMN_IMAGE_URL}) FROM ${PostTable.TABLE_NAME}")
     fun getCountOfPosts(): Int
 
-    @Query("DELETE from ${DBConstants.TABLE_NAME}")
+    @Query("DELETE from ${PostTable.TABLE_NAME}")
     fun deleteAll()
 }

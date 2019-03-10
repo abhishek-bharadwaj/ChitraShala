@@ -1,6 +1,6 @@
 package com.abhishek.chitrashala.utils
 
-import com.abhishek.chitrashala.data.database.PostEntity
+import com.abhishek.chitrashala.data.database.post.PostEntity
 import com.abhishek.chitrashala.data.models.RedditData
 import com.abhishek.chitrashala.ui.PostUIModel
 

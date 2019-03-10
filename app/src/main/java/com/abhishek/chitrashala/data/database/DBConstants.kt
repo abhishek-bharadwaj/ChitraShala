@@ -1,7 +1,8 @@
 package com.abhishek.chitrashala.data.database
 
-object DBConstants {
-    const val DATABASE_NAME = "chitrashala.db"
+const val DATABASE_NAME = "chitrashala.db"
+
+object PostTable {
     const val TABLE_NAME = "posts"
 
     const val COLUMN_ID = "id"
@@ -14,4 +15,10 @@ object DBConstants {
     const val COLUMN_LIKES = "likes"
     const val COLUMN_AUTHOR = "author"
     const val COLUMN_IS_OVER_18 = "is_over_18"
+}
+
+object CategoryTable {
+    const val TABLE_NAME = "categories"
+
+    const val COLUMN_ID = "id"
 }
