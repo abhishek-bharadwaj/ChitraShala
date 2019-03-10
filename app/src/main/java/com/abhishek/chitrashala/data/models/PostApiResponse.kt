@@ -2,7 +2,7 @@ package com.abhishek.chitrashala.data.models
 
 import com.google.gson.annotations.SerializedName
 
-class RedditData(@SerializedName("data") val postData: Data) {
+class PostApiResponse(@SerializedName("data") val postData: Data) {
 
     class Data(@SerializedName("children") val children: List<Children>,
                @SerializedName("after") val after: String,

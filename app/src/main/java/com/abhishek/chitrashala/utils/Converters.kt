@@ -1,13 +1,13 @@
 package com.abhishek.chitrashala.utils
 
 import com.abhishek.chitrashala.data.database.post.PostEntity
-import com.abhishek.chitrashala.data.models.RedditData
+import com.abhishek.chitrashala.data.models.PostApiResponse
 import com.abhishek.chitrashala.ui.PostUIModel
 
 object Converters {
 
-    fun convertRedditDataToEntity(redditData: RedditData): List<PostEntity> {
-        return redditData.postData.children.map {
+    fun convertRedditDataToEntity(postApiResponse: PostApiResponse): List<PostEntity> {
+        return postApiResponse.postData.children.map {
             val postInfo = it.postInfo
             PostEntity(
                 id = postInfo.id,

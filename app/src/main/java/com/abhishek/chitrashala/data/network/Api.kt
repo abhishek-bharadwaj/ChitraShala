@@ -1,6 +1,7 @@
 package com.abhishek.chitrashala.data.network
 
-import com.abhishek.chitrashala.data.models.RedditData
+import com.abhishek.chitrashala.data.models.AboutApiResponse
+import com.abhishek.chitrashala.data.models.PostApiResponse
 import com.google.gson.GsonBuilder
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -43,12 +44,15 @@ object Api {
     interface ApiService {
         @GET("{subreddit}/new.json")
         fun getRedditData(@Path("subreddit") subreddit: String,
-                          @Query("limit") limit: Int): Single<Response<RedditData>>
+                          @Query("limit") limit: Int): Single<Response<PostApiResponse>>
 
         @GET("{subreddit}/new.json")
         fun getRedditData(@Path("subreddit") subreddit: String,
                           @Query("after") after: String,
                           @Query("limit") limit: Int)
-                : Single<Response<RedditData>>
+                : Single<Response<PostApiResponse>>
+
+        @GET("{subreddit}/about.json")
+        fun getSubredditInfo(@Path("subreddit") subreddit: String): Single<AboutApiResponse>
     }
 }
