@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhishek.chitrashala.ChitraShalaApp
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
-import com.abhishek.chitrashala.data.FeedsViewModel
-import com.abhishek.chitrashala.data.FeedsViewModelFactory
+import com.abhishek.chitrashala.ui.view_model.FeedsViewModel
+import com.abhishek.chitrashala.ui.view_model.FeedsViewModelFactory
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.ui.adapter.PostAdapter
@@ -51,7 +51,8 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         })
 
         feedViewModel = ViewModelProviders.of(this,
-            FeedsViewModelFactory(ChitraShalaApp.context, this))
+            FeedsViewModelFactory(ChitraShalaApp.context,
+                this))
             .get(FeedsViewModel::class.java)
         feedViewModel.getRedditPosts().observe(this, Observer { posts ->
             adapter.updateData(posts.map {

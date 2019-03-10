@@ -1,9 +1,10 @@
-package com.abhishek.chitrashala.data
+package com.abhishek.chitrashala.ui.view_model
 
 import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.abhishek.chitrashala.ChitraShalaApp
 import com.abhishek.chitrashala.data.database.ChitraShalaDB
 import com.abhishek.chitrashala.data.database.post.PostEntity
 import com.abhishek.chitrashala.data.network.Api
@@ -21,7 +22,6 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
     AndroidViewModel(app) {
 
     private val dao = ChitraShalaDB.getInstance().postDataDao()
-    private val subreddits = arrayListOf("handwriting", "sketches", "PopArtNouveau", "isometric")
     private val pref = AppPreference()
     private var isLoadingNewPosts = false
 
@@ -33,7 +33,7 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
                 if (count > 0 && after.isNullOrEmpty()) return@subscribe
-                getNewRedditPosts(subreddits.joinToString { "$it+" }, after)
+                getNewRedditPosts(ChitraShalaApp.subreddits.joinToString { "$it+" }, after)
             }, {
                 Timber.e(it.toString())
             })

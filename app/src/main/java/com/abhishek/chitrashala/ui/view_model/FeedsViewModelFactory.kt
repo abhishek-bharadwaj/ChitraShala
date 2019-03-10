@@ -1,4 +1,4 @@
-package com.abhishek.chitrashala.data
+package com.abhishek.chitrashala.ui.view_model
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
