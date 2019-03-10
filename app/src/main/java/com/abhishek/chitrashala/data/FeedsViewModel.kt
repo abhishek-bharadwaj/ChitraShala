@@ -29,9 +29,8 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
             dao.getCountOfPosts()
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
-                if (count == 0) {
-                    getNewRedditPosts(subreddits.joinToString { "$it+" }, after)
-                }
+                if (count > 0 && after.isNullOrEmpty()) return@subscribe
+                getNewRedditPosts(subreddits.joinToString { "$it+" }, after)
             }, {
                 Timber.e(it.toString())
             })
