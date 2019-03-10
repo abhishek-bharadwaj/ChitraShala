@@ -30,5 +30,9 @@ class PostActivity : BaseActivity() {
         ImageLoader.loadImage(this, postData.imageUrl, iv_post)
 
         tv_title.text = postData.title
+        tv_author.text = postData.author
+        tv_subreddit.text = postData.subreddit
+        tv_link.text = postData.postLink
+        if (postData.likes > 0) tv_likes.text = postData.likes.toString()
     }
 }
