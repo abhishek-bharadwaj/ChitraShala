@@ -7,7 +7,20 @@ import com.abhishek.chitrashala.ui.PostUIModel
 object Converters {
 
     fun convertRedditDataToEntity(redditData: RedditData): List<PostEntity> {
-        return redditData.postData.children.map { PostEntity(it.postInfo.url) }
+        return redditData.postData.children.map {
+            val postInfo = it.postInfo
+            PostEntity(
+                imageUrl = postInfo.url,
+                subreddit = postInfo.subreddit,
+                createdAt = postInfo.created_utc,
+                isStarred = false,
+                author = postInfo.author,
+                likes = postInfo.ups,
+                postLink = postInfo.permalink,
+                title = postInfo.title,
+                isOver18 = postInfo.over_18
+            )
+        }
     }
 
     fun convertPostEntityToUIModel(entity: PostEntity): PostUIModel {
