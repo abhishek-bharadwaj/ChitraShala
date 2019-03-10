@@ -13,5 +13,5 @@ class AppPreference : BaseSharedPreference(ChitraShalaApp.context.getSharedPrefe
 
     fun savePostAfter(postAfter: String) = getEditior().putString(KEY_POST_AFTER, postAfter).apply()
 
-    fun getPostAfter() = getPref().getString(KEY_POST_AFTER, null)
+    fun getPostAfter(): String? = getPref().getString(KEY_POST_AFTER, null)
 }

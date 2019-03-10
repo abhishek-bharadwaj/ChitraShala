@@ -2,6 +2,7 @@ package com.abhishek.chitrashala.ui.view_model
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.abhishek.chitrashala.ChitraShalaApp
@@ -30,13 +31,13 @@ class FeedsViewModel(app: Application, private val messageReceiver: MessageRecei
     }
 
     @SuppressLint("CheckResult")
-    fun getRedditPosts(): LiveData<List<PostEntity>> {
-        val after = AppPreference().getPostAfter()
+    fun getRedditPosts(after: String?): LiveData<List<PostEntity>> {
         Single.fromCallable {
             dao.getCountOfPosts()
         }.subscribeOn(Schedulers.io())
             .subscribe({ count ->
-                if (count > 0 && after.isNullOrEmpty()) return@subscribe
+                Timber.d("Loading posts after %s", after)
+                if (count > 0 && TextUtils.isEmpty(after)) return@subscribe
                 getNewRedditPosts(ChitraShalaApp.subreddits.joinToString { "$it+" }, after)
             }, {
                 Timber.e(it.toString())

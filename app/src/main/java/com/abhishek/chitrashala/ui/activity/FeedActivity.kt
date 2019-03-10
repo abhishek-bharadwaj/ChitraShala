@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abhishek.chitrashala.ChitraShalaApp
 import com.abhishek.chitrashala.R
 import com.abhishek.chitrashala.base.BaseActivity
+import com.abhishek.chitrashala.data.preferences.AppPreference
 import com.abhishek.chitrashala.interfaces.MessageReceiver
 import com.abhishek.chitrashala.interfaces.PostClickCallbacks
 import com.abhishek.chitrashala.ui.adapter.PostAdapter
@@ -43,7 +44,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    feedViewModel.getRedditPosts()
+                    feedViewModel.getRedditPosts(AppPreference().getPostAfter())
                 }
             }
         })
@@ -51,7 +52,7 @@ class FeedActivity : BaseActivity(), PostClickCallbacks, View.OnClickListener, M
         feedViewModel = ViewModelProviders.of(this,
             FeedsViewModelFactory(ChitraShalaApp.context, this))
             .get(FeedsViewModel::class.java)
-        feedViewModel.getRedditPosts().observe(this, Observer { posts ->
+        feedViewModel.getRedditPosts(null).observe(this, Observer { posts ->
             adapter.updateData(posts.map {
                 Converters.convertPostEntityToUIModel(it)
             })
