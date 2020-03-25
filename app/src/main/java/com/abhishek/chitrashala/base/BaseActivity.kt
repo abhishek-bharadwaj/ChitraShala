@@ -29,8 +29,6 @@ abstract class BaseActivity : AppCompatActivity() {
             window.decorView.findViewById<View>(android.R.id.content).systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
     }
 

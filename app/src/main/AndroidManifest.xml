@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.ChooseCategoryActivity"></activity>
+        <activity android:name=".ui.activity.ChooseCategoryActivity" />
         <activity
             android:name=".ui.activity.FeedActivity"
             android:theme="@style/AppTheme.FeedView">
